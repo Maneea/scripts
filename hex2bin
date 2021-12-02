@@ -1,0 +1,28 @@
+#!/bin/env python
+
+from binascii import unhexlify
+from sys import argv
+from string import hexdigits
+from re import match
+
+if len(argv) < 2:
+    print("Usage: {} hex [hex...]".format(argv[0]))
+    exit(1)
+
+for i in range(1,len(argv)):
+    print("_"*60)
+    h = argv[i].strip();
+    if match("^[{}]+$".format(hexdigits), h) == None:
+        # TODO: Make it print to stderr
+        print("The input {} is not a valid hex match".format(h))
+        continue
+    elif len(h) % 2 != 0:
+        # TODO: Make it print to stderr
+        print("The length of {} is not a multiple of two, and hence cannot be converted to ASCII".format(h))
+        continue
+    try:
+        print("{}\n{}".format(h, unhexlify(h)))
+    except Exception as e:
+        print(e)
+
+print("_"*60)

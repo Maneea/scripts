@@ -1,0 +1,20 @@
+#!/bin/env python
+
+# XOR tool to make an xor operation on two or more datasets.
+# The tool will first normalize all provided content to be
+# of the same length, and start XORing. The content can be
+# from args or from a file. The content can be in hex format
+# or in raw/binary format. 
+
+# Currently, it only supports recieving two hex values from
+# args and simply xoring them.
+
+from sys import argv
+from binascii import hexlify as hx
+from binascii import unhexlify as ux
+out = ''
+a1  = ux(argv[1])
+a2  = ux(argv[2])
+for i in range(0, len(min(a1,a2))):
+    out+= chr(ord(a1[i%len(a1)])^ord(a2[i%len(a2)]))
+print(hx(out))

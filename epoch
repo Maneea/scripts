@@ -1,0 +1,37 @@
+#!/bin/env python3
+
+# A simple utility for the conversion of epochs.
+
+from sys import argv
+from datetime import datetime as dt
+from pytz import timezone as tz
+
+if len(argv) < 2:
+    print('Usage: %s <epoch> [<epoch>]...' % argv[0])
+    exit(0)
+
+newyork_tz = tz('US/Eastern')
+london_tz = tz('Europe/London')
+berlin_tz = tz('Europe/Berlin')
+tokyo_tz = tz('Asia/Tokyo')
+sydney_tz = tz('Australia/Sydney')
+riyadh_tz = tz('Asia/Riyadh')
+shanghai_tz = tz('Asia/Shanghai')
+first_iteration = True
+for epoch in argv[1:]:
+    if len(epoch) > 10:
+        epoch = epoch[:10]
+    
+    date_utc = dt.fromtimestamp(int(epoch))
+    print('_'*40 + f'{"/" if not first_iteration else ""}')
+    print ('{0:<12} {1:<26} |'.format('Epoch:', epoch))
+    print ('{0:<12} {1:<26} |'.format('UTC:', str(date_utc)))
+    print ('{0:<12} {1:<26} |'.format('New York:', str(date_utc.astimezone(newyork_tz))))
+    print ('{0:<12} {1:<26} |'.format('London:', str(date_utc.astimezone(london_tz))))
+    print ('{0:<12} {1:<26} |'.format('Berlin:', str(date_utc.astimezone(berlin_tz))))
+    print ('{0:<12} {1:<26} |'.format('Tokyo:', str(date_utc.astimezone(tokyo_tz))))
+    print ('{0:<12} {1:<26} |'.format('Sydney:', str(date_utc.astimezone(sydney_tz))))
+    print ('{0:<12} {1:<26} |'.format('Shanghai:', str(date_utc.astimezone(shanghai_tz))))
+    print ('{0:<12} {1:<26} |'.format('Riyadh:', str(date_utc.astimezone(riyadh_tz))))
+    first_iteration = False
+print('_'*40 + "/")

@@ -5,12 +5,11 @@ if [ $(docker ps -aq | wc -l) -eq 0 ]; then
   echo "🟩 No containers active running."
 else
   echo "============================="
-  echo "🚫 Stopping all containers..."
-  echo "============================="
+  echo "⚙️  Stopping the following containers:"
   docker stop $(docker ps -aq)
   echo "✅ All containers stopped."
+  echo "⚙️  Removing the following containers:"
   docker rm $(docker ps -aq)
-  echo "============================="
   echo "✅ All containers removed."
   echo "============================="
   echo ""
@@ -21,10 +20,8 @@ if [ $(docker volume ls -qf dangling=true | wc -l) -eq 0 ]; then
 	echo "🟩 No volumes active running."
 else
   echo "============================="
-  echo "🚫 Removing all volumes..."
-  echo "============================="
+  echo "⚙️  Removing the following volumes:"
   docker volume rm $(docker volume ls -qf dangling=true)
-  echo "============================="
   echo "✅ All volumes removed."
   echo "============================="
   echo ""
@@ -35,10 +32,8 @@ if [ $(docker images -qf dangling=true | wc -l) -eq 0 ]; then
 	echo "🟩 No images active running."
 else
   echo "============================="
-  echo "🚫 Removing all images..."
-  echo "============================="
+  echo "⚙️  Removing the following images:"
   docker rmi $(docker images -qf dangling=true)
-  echo "============================="
   echo "✅ All images removed."
   echo "============================="
   echo ""
@@ -49,10 +44,8 @@ if [ $(docker network ls -qf dangling=true | wc -l) -eq 0 ]; then
 	echo "🟩 No networks active running."
 else
   echo "============================="
-  echo "🚫 Removing all networks..."
-  echo "============================="
+  echo "⚙️  Removing the following networks:"
   docker network rm $(docker network ls -qf dangling=true)
-  echo "============================="
   echo "✅ All networks removed."
   echo "============================="
   echo ""

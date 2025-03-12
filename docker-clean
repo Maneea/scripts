@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Remove all stopped containers
+if [ $(docker ps -aq | wc -l) -eq 0 ]; then
+  echo "🟩 No containers active running."
+else
+  echo "============================="
+  echo "🚫 Stopping all containers..."
+  echo "============================="
+  docker stop $(docker ps -aq)
+  echo "✅ All containers stopped."
+  docker rm $(docker ps -aq)
+  echo "============================="
+  echo "✅ All containers removed."
+  echo "============================="
+  echo ""
+fi
+
+# Remove all volumes not used by at least one container
+if [ $(docker volume ls -qf dangling=true | wc -l) -eq 0 ]; then
+	echo "🟩 No volumes active running."
+else
+  echo "============================="
+  echo "🚫 Removing all volumes..."
+  echo "============================="
+  docker volume rm $(docker volume ls -qf dangling=true)
+  echo "============================="
+  echo "✅ All volumes removed."
+  echo "============================="
+  echo ""
+fi
+
+# Remove all images not used by at least one container
+if [ $(docker images -qf dangling=true | wc -l) -eq 0 ]; then
+	echo "🟩 No images active running."
+else
+  echo "============================="
+  echo "🚫 Removing all images..."
+  echo "============================="
+  docker rmi $(docker images -qf dangling=true)
+  echo "============================="
+  echo "✅ All images removed."
+  echo "============================="
+  echo ""
+fi
+
+# Remove all networks not used by at least one container
+if [ $(docker network ls -qf dangling=true | wc -l) -eq 0 ]; then
+	echo "🟩 No networks active running."
+else
+  echo "============================="
+  echo "🚫 Removing all networks..."
+  echo "============================="
+  docker network rm $(docker network ls -qf dangling=true)
+  echo "============================="
+  echo "✅ All networks removed."
+  echo "============================="
+  echo ""
+fi
